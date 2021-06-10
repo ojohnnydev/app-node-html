@@ -1,6 +1,6 @@
 ### What is this repository for? ###
 
-* Project Name: api-react-html
+* Project Name: api-node-html
 * Quick summary: API e aplicação modelo de um restaurante virtual
 * Version: 1.0.0
 

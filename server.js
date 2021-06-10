@@ -29,6 +29,8 @@ app.get("/", (req, res) => {
 });
 
 require("./routes/clientes.routes")(app);
+require("./routes/cardapio.routes")(app);
+require("./routes/pedido.routes")(app);
 
 // set port, listen for requests
 app.listen(3000, '127.0.0.1',() => {
