@@ -21,11 +21,9 @@
         var cardapio = 'cardapio';
 
         $('#cliente').on('click', function () {
-            // $('#' + cardapio).closest('.item-menu').removeClass('item-menu-ativo');
             $('#cardapio, #area-cliente').closest('.item-menu').removeClass('item-menu-ativo');
             $(this).closest('.item-menu').toggleClass('item-menu-ativo');
 
-            // $('.cardapio').fadeOut('fast');
             $('.area-cliente, .cardapio').fadeOut('fast');
             $('.cliente').fadeIn('slow');
         });
@@ -39,17 +37,14 @@
         });
 
         $('#cardapio').on('click', function () {
-            // $('#' + cliente).closest('.item-menu').removeClass('item-menu-ativo')
             $('#cliente, #area-cliente').closest('.item-menu').removeClass('item-menu-ativo')
             $(this).closest('.item-menu').toggleClass('item-menu-ativo')
 
-            // $('.cliente').fadeOut('fast');
             $('.cliente, .area-cliente').fadeOut('fast');
             $('.cardapio').removeClass('oculto').fadeIn('slow');
         });
 
         $('#' + cliente).on('mouseover', function () {
-            // $('#' + cardapio).closest('.item-menu').removeClass('mouseOverMenu')
             $('#area-cliente, #cardapio').closest('.item-menu').removeClass('mouseOverMenu')
             $(this).closest('.item-menu').toggleClass('mouseOverMenu')
         });
@@ -60,17 +55,18 @@
         });
 
         $('#' + cardapio).on('mouseover', function () {
-            // $('#' + cliente).closest('.item-menu').removeClass('mouseOverMenu')
             $('#cliente, #area-cliente').closest('.item-menu').removeClass('mouseOverMenu')
             $(this).closest('.item-menu').toggleClass('mouseOverMenu')
         });
 
+        // Muda para o formulário de login
         $('#btn-cadastro').click(function () {
             $('.login').fadeOut('slow', function () {
                 $('.cadastro').fadeIn('slow');
             });
         });
 
+        // Muda para o formulário de cadastro
         $('#btn-login').click(function () {
             $('.cadastro').fadeOut('slow', function () {
                 $('.login').fadeIn('slow');
@@ -127,7 +123,7 @@
                         buscaPedidosCliente(id_cliente);
 
                         $('#cliente, .login, .cadastro').addClass('oculto');
-                        $('.cliente-logado').html('<span>Seja bem-vindo '+ cliente +'!</span>').fadeIn('slow');
+                        $('.cliente-logado').html('<span>Seja bem-vind@ '+ cliente +'!</span>').fadeIn('slow');
 
                         $('#' + area_cliente).closest('.item-menu').toggleClass('item-menu-ativo').removeClass('oculto').fadeIn('slow', function () {
                             $('.area-cliente').removeClass('oculto').fadeIn('slow');
@@ -179,6 +175,7 @@
             return data.getDate() + '/' + (data.getMonth() + 1) + '/' + data.getFullYear();
         }
 
+        // Carrega o cardápio direto da base
         function carregaCardapio () {
 
             $.get('http://localhost:3000/cardapio', function (response) {
@@ -233,15 +230,17 @@
             });
         }
 
+        // Busca pedidos realizados pelo cliente logado
         function buscaPedidosCliente (id_cliente) {
 
             $.get('http://localhost:3000/pedido/' + id_cliente, function (response) {
 
                 var cardapio = '';
+                var table_body = 'table-body';
 
                 if (response.length > 0) {
 
-                    console.log(response);
+                    $('#' + table_body).empty();
 
                     $.each(response, function (key, value) {
 
@@ -263,7 +262,7 @@
                             cardapio = cardapio + ', ' + value['sobremesa'];
                         }
 
-                        $('#table-body')
+                        $('#' + table_body)
                             .append('<tr><td>'+ value['id'] +'</td><td>'+ cardapio +'</td><td>'+ formataDataExibe(new Date(value['data'])) +'</td></tr>');
                     });
                 } else {
@@ -272,5 +271,22 @@
                 }
             });
         }
+
+        // Desloga o usuário e o retorna para a página inicial
+        $('#btn-logout').click(function () {
+
+            localStorage.removeItem('CLIENTE_LOGADO');
+            localStorage.removeItem('ID_CLIENTE');
+
+            $('#area-cliente, .area-cliente').addClass('oculto');
+
+            $('#cliente').closest('.item-menu').toggleClass('item-menu-ativo').removeClass('oculto').fadeIn('slow', function () {
+                $('.login').removeClass('oculto').fadeIn('slow');
+            });
+
+            setTimeout(function () {
+                location.reload();
+            }, 300);
+        });
     });
 </script>

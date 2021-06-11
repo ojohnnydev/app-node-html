@@ -17,14 +17,14 @@
                 </tr>
             </thead>
             <tbody id="table-body">
-                <!--<tr class="txt-center">
+                <tr class="txt-center">
                     <td colspan="7">Nenhum registro encontrado!</td>
-                </tr>-->
+                </tr>
             </tbody>
         </table>
     </div>
 </div>
 
 <div class="col-md-3 mt-5 ml-auto">
-    <button type="button" class="btn btn-light">Sair</button>
+    <button type="button" class="btn btn-light" id="btn-logout">Sair</button>
 </div>
